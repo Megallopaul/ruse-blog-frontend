@@ -1,5 +1,5 @@
 import axios from 'axios'
-import strapiRepository from './repositories/strapiRepository'
+import { blogRepository } from './repositories/index'
 
 require('dotenv').config()
 
@@ -26,7 +26,15 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/fonts.scss',
+    '~/assets/global.scss',
   ],
+
+  styleResources: {
+    scss: [
+      '~/assets/main.scss',
+    ]
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -44,6 +52,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/style-resources'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -59,9 +68,10 @@ export default {
   generate: {
     fallback: '404.html',
     async routes() {
-      const strapiClient = axios.create({ baseURL: process.env.STRAPI_URL })
-      const blogRepository = new strapiRepository(strapiClient)
       const { data } = await blogRepository.listPosts()
+      // const strapiClient = axios.create({ baseURL: process.env.STRAPI_URL })
+      // onst blogRepository = new strapiRepository(strapiClient)
+      // const { data } = await blogRepository.listPosts()
       return data.map(post => '/posts/' + post.attributes.slug)
     }
   }

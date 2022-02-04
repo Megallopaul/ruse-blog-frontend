@@ -1,0 +1,17 @@
+@import "colors";
+
+// Font families
+$primary-font: "Keep on Truckin", sans-serif;
+$secondary-font: "Work Sans", sans-serif;
+
+// Screen breakpoints
+$xx-large-screen: 1400px;
+$x-large-screen: 1200px;
+$large-screen: 992px;
+$medium-screen: 768px;
+$small-screen: 576px;
+
+@mixin title {
+  color: $blood-red;
+  font-family: "Keep on Truckin", sans-serif;
+}

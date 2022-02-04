@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <p>Ruse blog</p>
-    <ul>
-      <li>
-        <a href="https://www.instagram.com/ruse.paris/" target="_blank">Instagram RUSE</a>
-      </li>
-      <li>
-        <a href="https://www.facebook.com/rusefr" target="_blank">Facebook RUSE</a>
-      </li>
-    </ul>
-  </div>
+  <footer class="main-footer">
+    <div>Ruse 2021</div>
+  </footer>
 </template>
+<style lang="scss" scoped>
+.main-footer {
+  align-items: center;
+  color: white;
+  background-color: #190100;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 2rem;
+}
+</style>
