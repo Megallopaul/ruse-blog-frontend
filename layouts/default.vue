@@ -1,31 +1,89 @@
 <template>
   <div class="default-layout">
-    <main-header class="main-header" />
+    <header class="main-header">
+      <main-header class="main-header-content"/>
+    </header>
     <nuxt class="main-container"/>
-    <main-footer class="main-footer" />
+    <footer class="main-footer">
+      <main-footer class="main-footer-content" />
+    </footer>
   </div>
 </template>
 <style lang="scss" scoped>
 .default-layout {
   background-color: #FDF6EC;
-  min-height: 100%;
-}
-.main-header {
-  margin: auto;
-  max-width: 100%;
-  padding: 2rem;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-rows: auto auto 10vh;
+  grid-template-areas:
+    "header header header"
+    "main main main"
+    "footer footer footer";
+  padding-top: 1rem;
 
   @media (min-width: $medium-screen) {
-    height: 10vh;
+    grid-template-rows: 15vh auto 10vh;
+  }
+
+  @media (min-width: $large-screen) {
+    grid-template-columns: 1fr 4fr 1fr;
+  }
+
+  @media (min-width: $x-large-screen) {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  @media (min-width: $xx-large-screen) {
+    grid-template-columns: 1fr 1.5fr 1fr;
+  }
+}
+.main-header {
+  align-self: center;
+  grid-area: header;
+  grid-column: 1 / 4;
+
+  @media (min-width: $medium-screen) {
+    grid-column: 2 / 3;
   }
 }
 .main-container {
-  min-height: 78vh;
+  grid-area: main;
+  grid-column: 1 / 4;
   margin: auto;
-  max-width: 75rem;
-  padding: 2rem;
+  padding: 2rem 1rem;
+
+  @media (min-width: $medium-screen) {
+    grid-column: 2 / 3;
+    padding: 2rem 0;
+  }
 }
 .main-footer {
-  height: 5vh;
+  grid-area: footer;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  align-items: center;
+  color: white;
+  background-color: #190100;
+  padding: 0 1rem;
+
+  @media (min-width: $large-screen) {
+    grid-template-columns: 1fr 4fr 1fr;
+  }
+
+  @media (min-width: $x-large-screen) {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  @media (min-width: $xx-large-screen) {
+    grid-template-columns: 1fr 1.5fr 1fr;
+  }
+}
+.main-footer-content {
+  grid-column: 1 / 4;
+
+  @media (min-width: $medium-screen) {
+    grid-column: 2 / 3;
+  }
 }
 </style>

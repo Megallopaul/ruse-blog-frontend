@@ -14,4 +14,5 @@ $small-screen: 576px;
 @mixin title {
   color: $blood-red;
   font-family: "Keep on Truckin", sans-serif;
+  line-height: 1.2em;
 }

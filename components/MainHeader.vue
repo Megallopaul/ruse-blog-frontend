@@ -1,6 +1,6 @@
 <template>
   <nav class="main-header">
-    <nuxt-link to="/">
+    <nuxt-link class="logo-wrapper" to="/">
       <img src="/logo-ruse.svg" alt="Logo Ruse" height="65px">
     </nuxt-link>
     <ul class="main-navigation" role="navigation">
@@ -27,21 +27,25 @@
 
   @media (min-width: $medium-screen) {
     flex-direction: row;
-    max-width: 70rem;
+  }
+}
+.logo-wrapper {
+  margin-bottom: 1rem;
+
+  @media (min-width: $medium-screen) {
+    margin: 0;
   }
 }
 .main-navigation {
   display: flex;
-  gap: 1rem;
   flex-direction: column;
-  margin: 1em 0 0 0;
   list-style: none;
+  margin: 0;
   padding: 0;
 
   @media (min-width: $small-screen) {
     flex-direction: row;
     gap: 4rem;
-    margin: 0;
   }
 }
 .nav-link {

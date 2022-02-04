@@ -29,32 +29,27 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.post-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
-
-  @media (min-width: $x-large-screen) {
-    grid-template-columns: 1fr 3fr 1fr;
-  }
-
-  @media (min-width: $xx-large-screen) {
-    grid-template-columns: 1fr 2fr 1fr;
-  }
-}
-
 .post {
-  grid-column: 1 / 4;
   text-size-adjust: 100%;
-
-  @media (min-width: $large-screen) {
-    grid-column: 2 / 3;
-  }
 }
 
 .post-title {
   @include title;
   margin-top: 0;
   margin-bottom: 1.5rem;
+
+  &:before, &:after {
+    content: url("static/4-branch-star.svg");
+    height: 24px;
+  }
+
+  &:before {
+    margin-right: 0.5rem;
+  }
+
+  &:after {
+    margin-left: 0.5rem;
+  }
 }
 
 .post-publication-date {
@@ -92,6 +87,10 @@ export default {
 
     ul {
       list-style: url("static/dot.svg");
+    }
+
+    ol, ul {
+      padding-left: 1em;
     }
   }
 }
