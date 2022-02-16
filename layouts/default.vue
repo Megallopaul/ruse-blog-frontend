@@ -4,6 +4,16 @@
       <main-header class="main-header-content"/>
     </header>
     <nuxt class="main-container"/>
+    <div class="social-medias-container">
+      <ul class="social-medias-list">
+        <li>
+          <social-media-button class="social-media" social-media-name="instagram" />
+        </li>
+        <li>
+          <social-media-button class="social-media" social-media-name="facebook" />
+        </li>
+      </ul>
+    </div>
     <footer class="main-footer">
       <main-footer class="main-footer-content" />
     </footer>
@@ -14,6 +24,7 @@
   background-color: #FDF6EC;
   min-height: 100vh;
   display: grid;
+  row-gap: 2rem;
   grid-template-columns: 1fr 6fr 1fr;
   grid-template-rows: auto auto 10vh;
   grid-template-areas:
@@ -50,12 +61,31 @@
 .main-container {
   grid-area: main;
   grid-column: 1 / 4;
-  margin: auto;
-  padding: 2rem 1rem;
 
   @media (min-width: $medium-screen) {
     grid-column: 2 / 3;
-    padding: 2rem 0;
+  }
+}
+.social-medias-container {
+  grid-area: main;
+  display: none;
+  grid-column: 3 / 4;
+  position: relative;
+  padding-left: 2rem;
+
+  @media (min-width: $medium-screen) {
+    display: inline-block;
+  }
+
+  .social-medias-list {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: fixed;
   }
 }
 .main-footer {

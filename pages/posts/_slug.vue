@@ -2,8 +2,15 @@
   <div class="post-wrapper">
     <div class="post" itemscope itemtype="https://schema.org/Article">
       <h1 class="post-title" itemprop="name">{{ post.attributes.title }}</h1>
-      <div class="post-publication-date" itemprop="datePublished">{{ publicationDate }}</div>
+      <time class="post-publication-date" :datetime="post.attributes.publishedAt" itemprop="datePublished">{{ publicationDate }}</time>
       <div v-html="contentAsHtml" class="post-content" itemprop="articleBody"></div>
+      <footer class="article-author">
+        <img class="profile-picture" :src="author.data.attributes.profilePicture.data.attributes.formats.thumbnail.url" :alt="author.data.attributes.profilePicture.data.attributes.alternativeText">
+        <div>
+          <span class="name">{{ author.data.attributes.name }}</span>
+          <div class="description">{{ author.data.attributes.description }}</div>
+        </div>
+      </footer>
     </div>
   </div>
 </template>
@@ -15,7 +22,8 @@ export default {
   name: 'PostPage',
   async asyncData({ route }) {
     const post = await blogRepository.getPostFromSlug(route.params.slug)
-    return { post }
+    const author = await blogRepository.getAuthor('1')
+    return { author, post }
   },
   computed: {
     contentAsHtml() {
@@ -58,6 +66,8 @@ export default {
 }
 
 .post-content {
+  margin-bottom: 2.5rem;
+
   ::v-deep {
     p {
       line-height: 1.6em;
@@ -92,6 +102,29 @@ export default {
     ol, ul {
       padding-left: 1em;
     }
+  }
+}
+.article-author {
+  align-items: center;
+  background-color: #FDEFDD;
+  border-radius: 8px;
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  .profile-picture {
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 1rem;
+    height: 48px;
+    width: 48px;
+  }
+  .name {
+    font-weight: 500;
+  }
+  .description {
+    font-size: 0.8em;
+    line-height: 1.3em;
   }
 }
 </style>

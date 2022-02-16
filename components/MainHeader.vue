@@ -68,7 +68,7 @@
   &:hover:after {
     animation: slide;
     animation-duration: 0.2s;
-    animation-timing-function: ease;
+    animation-timing-function: ease-in-out;
   }
 
   @keyframes slide {

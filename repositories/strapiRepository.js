@@ -6,8 +6,21 @@ export default class strapiRepository {
     this.posts = []
   }
 
+  async getAuthor(id) {
+    const { data } = await this.client.get(`/authors/${id}`, {
+      params: {
+        populate: '*'
+      }
+    })
+    return data
+  }
+
   async listPosts() {
-    const { data } = await this.client.get('https://ruse-blog.herokuapp.com/api/posts')
+    const { data } = await this.client.get('/articles', {
+      params: {
+        populate: '*'
+      }
+    })
     this.posts = data
     return this.posts
   }
