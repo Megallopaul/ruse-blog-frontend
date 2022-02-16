@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { blogRepository } from './repositories/index'
 
 require('dotenv').config()
 
@@ -66,13 +65,21 @@ export default {
   },
 
   generate: {
-    fallback: '404.html',
     async routes() {
-      const { data } = await blogRepository.listPosts()
-      // const strapiClient = axios.create({ baseURL: process.env.STRAPI_URL })
-      // onst blogRepository = new strapiRepository(strapiClient)
-      // const { data } = await blogRepository.listPosts()
-      return data.map(post => '/posts/' + post.attributes.slug)
+      const strapiLoginData = {
+        identifier: process.env.STRAPI_AUTH_ID,
+        password: process.env.STRAPI_AUTH_PASSWORD
+      }
+
+      const { data: loginResponse } = await axios.post(`${process.env.STRAPI_URL}/auth/local`, strapiLoginData)
+      const strapiClient = axios.create({
+        baseURL: process.env.STRAPI_URL,
+        headers: {
+          'Authorization': `Bearer ${loginResponse.jwt}`
+        }
+      })
+      const { data: articles } = await strapiClient.get('/articles')
+      return articles.data.map(article => '/posts/' + article.attributes.slug)
     }
   }
 }
