@@ -15,7 +15,7 @@ export default class strapiRepository {
     return data
   }
 
-  async listPosts() {
+  async listArticles() {
     const { data } = await this.client.get('/articles', {
       params: {
         populate: '*'
@@ -25,9 +25,9 @@ export default class strapiRepository {
     return this.posts
   }
 
-  async getPostFromSlug(slug) {
+  async getArticleFromSlug(slug) {
     if (this.posts.length < 1) {
-      await this.listPosts()
+      await this.listArticles()
     }
     return this.posts.data.find(post => post.attributes.slug === slug)
   }

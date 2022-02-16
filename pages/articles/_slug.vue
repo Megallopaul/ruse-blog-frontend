@@ -1,9 +1,9 @@
 <template>
-  <div class="post-wrapper">
-    <div class="post" itemscope itemtype="https://schema.org/Article">
-      <h1 class="post-title" itemprop="name">{{ post.attributes.title }}</h1>
-      <time class="post-publication-date" :datetime="post.attributes.publishedAt" itemprop="datePublished">{{ publicationDate }}</time>
-      <div v-html="contentAsHtml" class="post-content" itemprop="articleBody"></div>
+  <div class="article-wrapper">
+    <div class="article" itemscope itemtype="https://schema.org/Article">
+      <h1 class="article-title" itemprop="name">{{ article.attributes.title }}</h1>
+      <time class="article-publication-date" :datetime="article.attributes.publishedAt" itemprop="datePublished">{{ publicationDate }}</time>
+      <div v-html="contentAsHtml" class="article-content" itemprop="articleBody"></div>
       <footer class="article-author">
         <img class="profile-picture" :src="author.data.attributes.profilePicture.data.attributes.formats.thumbnail.url" :alt="author.data.attributes.profilePicture.data.attributes.alternativeText">
         <div>
@@ -19,29 +19,29 @@ import MarkdownIt from 'markdown-it'
 import { blogRepository } from '@/repositories';
 
 export default {
-  name: 'PostPage',
+  name: 'ArticlePage',
   async asyncData({ route }) {
-    const post = await blogRepository.getPostFromSlug(route.params.slug)
+    const article = await blogRepository.getArticleFromSlug(route.params.slug)
     const author = await blogRepository.getAuthor('1')
-    return { author, post }
+    return { author, article }
   },
   computed: {
     contentAsHtml() {
       const converter = new MarkdownIt({ html: true, linkify: true })
-      return converter.render(this.post.attributes.content)
+      return converter.render(this.article.attributes.content)
     },
     publicationDate() {
-      return new Date(this.post.attributes.publishedAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
+      return new Date(this.article.attributes.publishedAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.post {
+.article {
   text-size-adjust: 100%;
 }
 
-.post-title {
+.article-title {
   @include title;
   margin-top: 0;
   margin-bottom: 1.5rem;
@@ -60,12 +60,12 @@ export default {
   }
 }
 
-.post-publication-date {
+.article-publication-date {
   font-size: 0.9em;
   margin-bottom: 1rem;
 }
 
-.post-content {
+.article-content {
   margin-bottom: 2.5rem;
 
   ::v-deep {
