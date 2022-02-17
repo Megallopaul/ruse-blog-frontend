@@ -1,8 +1,14 @@
+import { defineNuxtConfig } from '@nuxt/bridge'
 import { blogRepository } from './repositories/index'
 
 require('dotenv').config()
 
-export default {
+const getRoutes = async () => {
+  const { data } = await blogRepository.listArticles()
+  return data.map(article => '/articles/' + article.attributes.slug)
+}
+
+export default defineNuxtConfig({
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -51,7 +57,6 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/google-analytics',
     '@nuxtjs/style-resources',
     '@nuxtjs/sitemap'
   ],
@@ -71,16 +76,14 @@ export default {
   generate: {
     fallback: '404.html',
     async routes() {
-      const { data } = await blogRepository.listArticles()
-      return data.map(article => '/articles/' + article.attributes.slug)
+      return getRoutes()
     }
   },
 
-  googleAnalytics: {
-    id: process.env.GOOGLE_ANALYTICS_ID
-  },
-
   sitemap: {
-    hostname: 'https://toto.fr'
+    hostname: process.env.HOSTNAME,
+    routes() {
+      return getRoutes();
+    }
   }
-}
+})

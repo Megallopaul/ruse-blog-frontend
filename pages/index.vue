@@ -27,6 +27,9 @@ import { blogRepository } from "@/repositories"
 
 export default {
   name: 'IndexPage',
+  head() {
+    return { titleTemplate: null }
+  },
   async asyncData() {
     const { data, meta } = await blogRepository.listArticles()
     return { articles: data, metadata: meta }

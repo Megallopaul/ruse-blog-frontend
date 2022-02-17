@@ -22,7 +22,7 @@
 <script>
 export default {
   head() {
-    return { titleTemplate: 'Ruse - %s'}
+    return { titleTemplate: '%s - Ruse'}
   }
 }
 </script>
