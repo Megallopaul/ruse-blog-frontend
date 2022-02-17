@@ -7,4 +7,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       id: process.env.GOOGLE_ANALYTICS_ID
     }
   })
+  console.log("GTAG init")
 })

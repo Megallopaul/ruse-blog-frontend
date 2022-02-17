@@ -1,8 +1,6 @@
 import { defineNuxtConfig } from '@nuxt/bridge'
 import { blogRepository } from './repositories/index'
 
-require('dotenv').config()
-
 const getRoutes = async () => {
   const { data } = await blogRepository.listArticles()
   return data.map(article => '/articles/' + article.attributes.slug)
@@ -81,7 +79,7 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
-    hostname: process.env.HOSTNAME,
+    hostname: process.env.BASE_URL,
     routes() {
       return getRoutes();
     }
