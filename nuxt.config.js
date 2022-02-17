@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { blogRepository } from './repositories/index'
 
 require('dotenv').config()
@@ -9,9 +8,9 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'ruse-frontend',
+    title: 'Ruse',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'fr'
     },
     meta: [
       { charset: 'utf-8' },
@@ -52,7 +51,9 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/google-analytics',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/sitemap'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -63,6 +64,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    minifyCSS: true,
+    minifyJS: true,
   },
 
   generate: {
@@ -71,5 +74,13 @@ export default {
       const { data } = await blogRepository.listArticles()
       return data.map(article => '/articles/' + article.attributes.slug)
     }
+  },
+
+  googleAnalytics: {
+    id: process.env.GOOGLE_ANALYTICS_ID
+  },
+
+  sitemap: {
+    hostname: 'https://toto.fr'
   }
 }

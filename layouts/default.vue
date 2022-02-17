@@ -19,6 +19,13 @@
     </footer>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return { titleTemplate: 'Ruse - %s'}
+  }
+}
+</script>
 <style lang="scss" scoped>
 .default-layout {
   background-color: #FDF6EC;

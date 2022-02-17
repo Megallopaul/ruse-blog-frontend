@@ -7,7 +7,7 @@
       <footer class="article-author">
         <img class="profile-picture" :src="author.data.attributes.profilePicture.data.attributes.formats.thumbnail.url" :alt="author.data.attributes.profilePicture.data.attributes.alternativeText">
         <div>
-          <span class="name">{{ author.data.attributes.name }}</span>
+          <span class="name" itemprop="author">{{ author.data.attributes.name }}</span>
           <div class="description">{{ author.data.attributes.description }}</div>
         </div>
       </footer>
@@ -20,6 +20,15 @@ import { blogRepository } from '@/repositories';
 
 export default {
   name: 'ArticlePage',
+  head() {
+    return {
+      title: this.article.attributes.title,
+      htmlAttrs: {
+        lang: 'fr',
+        amp: true
+      },
+    }
+  },
   async asyncData({ route }) {
     const article = await blogRepository.getArticleFromSlug(route.params.slug)
     const author = await blogRepository.getAuthor('1')
@@ -69,11 +78,13 @@ export default {
   margin-bottom: 2.5rem;
 
   ::v-deep {
+    h1, h2, h3, h4, h5, h6 {
+      @include title;
+    }
     p {
       line-height: 1.6em;
       margin: 1.5em 0;
     }
-
     a {
       text-decoration-color: $pumpkin-orange;
       text-decoration-thickness: 2px;
@@ -83,22 +94,18 @@ export default {
         color: inherit;
       }
     }
-
     img {
       max-width: 100%;
     }
-
     ol {
       li::marker {
         color: $pumpkin-orange;
         font-family: $primary-font;
       }
     }
-
     ul {
       list-style: url("static/dot.svg");
     }
-
     ol, ul {
       padding-left: 1em;
     }
