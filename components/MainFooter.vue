@@ -1,3 +1,3 @@
 <template>
-  <div>Ruse 2021</div>
+  <div>Ruse 2022</div>
 </template>

@@ -2,7 +2,7 @@
   <div class="article-wrapper">
     <div class="article" itemscope itemtype="https://schema.org/Article">
       <h1 class="article-title" itemprop="name">{{ article.attributes.title }}</h1>
-      <time class="article-publication-date" :datetime="article.attributes.publishedAt" itemprop="datePublished">{{ publicationDate }}</time>
+      <time class="article-publication-date" :datetime="article.attributes.updatedAt" itemprop="datePublished">{{ publicationDate }}</time>
       <div v-html="contentAsHtml" class="article-content" itemprop="articleBody"></div>
       <footer class="article-author">
         <img class="profile-picture" :src="author.data.attributes.profilePicture.data.attributes.formats.thumbnail.url" :alt="author.data.attributes.profilePicture.data.attributes.alternativeText">
@@ -40,7 +40,7 @@ export default {
       return converter.render(this.article.attributes.content)
     },
     publicationDate() {
-      return new Date(this.article.attributes.publishedAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
+      return new Date(this.article.attributes.updatedAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     }
   }
 }
