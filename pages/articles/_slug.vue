@@ -3,6 +3,7 @@
     <div class="article" itemscope itemtype="https://schema.org/Article">
       <h1 class="article-title" itemprop="name">{{ article.attributes.title }}</h1>
       <time class="article-publication-date" :datetime="article.attributes.updatedAt" itemprop="datePublished">{{ publicationDate }}</time>
+      <img class="article-preview-image" :src="article.attributes.preview_image.data.attributes.url" alt="" />
       <div v-html="contentAsHtml" class="article-content" itemprop="articleBody"></div>
       <footer class="article-author">
         <img class="profile-picture" :src="author.data.attributes.profilePicture.data.attributes.formats.thumbnail.url" :alt="author.data.attributes.profilePicture.data.attributes.alternativeText">
@@ -70,8 +71,17 @@ export default {
 }
 
 .article-publication-date {
+  display: block;
   font-size: 0.9em;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-preview-image {
+  border-radius: 10px;
+  height: 450px;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 .article-content {
@@ -87,10 +97,11 @@ export default {
     }
     a {
       text-decoration-color: $pumpkin-orange;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 4px;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      font-weight: 500;
 
-      &:visited {
+      &:visited, &:link {
         color: inherit;
       }
     }

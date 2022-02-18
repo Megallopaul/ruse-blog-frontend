@@ -68,9 +68,11 @@ export default {
 .main-container {
   grid-area: main;
   grid-column: 1 / 4;
+  padding: 1rem;
 
   @media (min-width: $medium-screen) {
     grid-column: 2 / 3;
+    padding: 0;
   }
 }
 .social-medias-container {
