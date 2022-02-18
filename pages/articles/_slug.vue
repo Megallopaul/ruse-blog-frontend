@@ -88,6 +88,10 @@ export default {
   margin-bottom: 2.5rem;
 
   ::v-deep {
+    *::selection {
+      background: lighten($pumpkin-orange,5%);
+      color: white;
+    }
     h1, h2, h3, h4, h5, h6 {
       @include title;
     }
@@ -100,22 +104,36 @@ export default {
       text-decoration-thickness: 1.5px;
       text-underline-offset: 3px;
       font-weight: 500;
+      transition: all 0.2s;
 
       &:visited, &:link {
         color: inherit;
+      }
+
+      &:hover {
+        color: $pumpkin-orange;
+        transition: all 0.2s;
       }
     }
     img {
       max-width: 100%;
     }
     ol {
-      li::marker {
-        color: $pumpkin-orange;
-        font-family: $primary-font;
+      li {
+        padding-left: 0.5em;
+
+        &::marker {
+          color: $pumpkin-orange;
+          font-family: $primary-font;
+        }
       }
     }
     ul {
       list-style: url("static/dot.svg");
+
+      li {
+        padding-left: 0.2em;
+      }
     }
     ol, ul {
       padding-left: 1em;
