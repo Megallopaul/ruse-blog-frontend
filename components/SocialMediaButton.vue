@@ -13,7 +13,7 @@ export default {
       else if (this.socialMediaName === 'facebook') return 'https://www.facebook.com/rusefr'
     },
     socialMediaImageUrl() {
-      return `${this.socialMediaName}.svg`
+      return `/${this.socialMediaName}.svg`
     }
   }
 }
