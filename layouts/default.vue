@@ -3,7 +3,7 @@
     <header class="main-header">
       <main-header class="main-header-content"/>
     </header>
-    <nuxt class="main-container"/>
+    <nuxt class="main-container" />
     <div class="social-medias-container">
       <ul class="social-medias-list">
         <li>
@@ -17,12 +17,30 @@
     <footer class="main-footer">
       <main-footer class="main-footer-content" />
     </footer>
+    <cookie-consent v-show="!hasClickedConsent" class="cookie-consent" @consent="updateConsent"/>
   </div>
 </template>
 <script>
+import SocialMediaButton from "../components/SocialMediaButton"
+import CookieConsent from "../components/CookieConsent";
+
 export default {
+  components: { CookieConsent, SocialMediaButton },
   head() {
     return { titleTemplate: '%s - Ruse'}
+  },
+  data: () => ({
+    hasClickedConsent: true,
+    hasConsentedCookies: false
+  }),
+  mounted() {
+    this.hasClickedConsent = localStorage.getItem('hasClickedConsent') || false
+  },
+  methods: {
+    updateConsent(consent) {
+      localStorage.setItem('hasClickedConsent', consent)
+      this.hasClickedConsent = true
+    }
   }
 }
 </script>
@@ -123,6 +141,17 @@ export default {
 
   @media (min-width: $medium-screen) {
     grid-column: 2 / 3;
+  }
+}
+.cookie-consent {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  box-shadow: 5px 5px 15px 0 transparentize(black, 0.75);
+
+  @media (min-width: $medium-screen) {
+    left: unset;
   }
 }
 </style>
