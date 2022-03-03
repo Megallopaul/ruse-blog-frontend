@@ -11,7 +11,7 @@
       </nuxt-link>
     </section>
     <section class="remaining-articles">
-      <nuxt-link v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug, id: article.id } }">
+      <nuxt-link v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug } }">
         <article class="article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${article.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ article.attributes.title }}</header>
