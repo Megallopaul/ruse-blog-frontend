@@ -3,7 +3,7 @@ import { blogRepository } from './repositories/index'
 
 const getRoutes = async () => {
   const { data } = await blogRepository.listArticles()
-  return data.map(article => '/articles/' + article.attributes.slug)
+  return data.map(async article => '/articles/' + article.attributes.slug)
 }
 
 export default defineNuxtConfig({
@@ -24,21 +24,7 @@ export default defineNuxtConfig({
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
-    script: [
-      { src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`, async: true },
-      {
-        innerHTML: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}');
-        `,
-        type: 'text/javascript',
-        charset: 'utf-8'
-      },
-    ],
-    __dangerouslyDisableSanitizers: ['innerHTML']
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

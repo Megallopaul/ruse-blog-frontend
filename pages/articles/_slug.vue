@@ -30,10 +30,11 @@ export default {
       },
     }
   },
-  async asyncData({ route }) {
-    const article = await blogRepository.getArticleFromSlug(route.params.slug)
-    const author = await blogRepository.getAuthor('1')
-    return { author, article }
+  async asyncData({ params }) {
+    return {
+      article: await blogRepository.getArticle(params.slug),
+      author: await blogRepository.getAuthor('1')
+    }
   },
   computed: {
     contentAsHtml() {

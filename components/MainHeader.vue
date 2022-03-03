@@ -1,6 +1,6 @@
 <template>
   <nav class="main-header">
-    <nuxt-link class="logo-wrapper" to="/">
+    <nuxt-link class="logo-wrapper" :to="{ path: '/' }">
       <img src="/logo-ruse.svg" alt="Logo Ruse" height="65px">
     </nuxt-link>
     <ul class="main-navigation" role="navigation">

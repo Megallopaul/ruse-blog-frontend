@@ -1,7 +1,7 @@
 <template>
   <div class="article-preview-list">
     <section class="main-article">
-      <nuxt-link :to="{ path: `/articles/${ lastPublishedArticle.attributes.slug }` }">
+      <nuxt-link :to="{ name: 'articles-slug', params: { slug: lastPublishedArticle.attributes.slug } }">
         <article class="main article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${lastPublishedArticle.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ lastPublishedArticle.attributes.title }}</header>
@@ -11,7 +11,7 @@
       </nuxt-link>
     </section>
     <section class="remaining-articles">
-      <nuxt-link :to="{ path: `/articles/${ article.attributes.slug }` }" v-for="article in remainingArticles" :key="article.id">
+      <nuxt-link v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug, id: article.id } }">
         <article class="article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${article.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ article.attributes.title }}</header>
