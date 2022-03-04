@@ -1,4 +1,3 @@
-import { defineNuxtConfig } from '@nuxt/bridge'
 import { blogRepository } from './repositories/index'
 
 const getRoutes = async () => {
@@ -6,7 +5,7 @@ const getRoutes = async () => {
   return data.map(async article => '/articles/' + article.attributes.slug)
 }
 
-export default defineNuxtConfig({
+export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -85,4 +84,4 @@ export default defineNuxtConfig({
       return getRoutes();
     }
   }
-})
+}
