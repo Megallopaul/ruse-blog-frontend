@@ -17,12 +17,13 @@
     <footer class="main-footer">
       <main-footer class="main-footer-content" />
     </footer>
-    <cookie-consent v-show="!hasClickedConsent" class="cookie-consent" @consent="updateConsent"/>
+    <cookie-consent v-show="hasConsentedCookies === null" class="cookie-consent" @consent="updateConsent"/>
   </div>
 </template>
 <script>
 import SocialMediaButton from "../components/SocialMediaButton"
 import CookieConsent from "../components/CookieConsent";
+import {bootstrap} from "vue-gtag";
 
 export default {
   components: { CookieConsent, SocialMediaButton },
@@ -30,17 +31,23 @@ export default {
     return { titleTemplate: '%s - Ruse'}
   },
   data: () => ({
-    hasClickedConsent: true,
     hasConsentedCookies: false
   }),
-  mounted() {
-    this.hasClickedConsent = localStorage.getItem('hasClickedConsent') || false
+  async mounted() {
+    this.hasConsentedCookies = localStorage.getItem('hasConsentedCookies')
+    console.log(this.hasConsentedCookies)
+    if (this.hasConsentedCookies) {
+      await bootstrap()
+    }
   },
   methods: {
-    updateConsent(consent) {
-      localStorage.setItem('hasClickedConsent', consent)
-      this.hasClickedConsent = true
-    }
+    async updateConsent(consent) {
+      this.hasConsentedCookies = consent
+      localStorage.setItem('hasConsentedCookies', consent)
+      if (consent) {
+        await bootstrap()
+      }
+    },
   }
 }
 </script>
