@@ -8,14 +8,14 @@ export default class strapiRepository {
   }
 
   async getAuthor(id) {
-    const { data } = await this.client.get(`/authors/${id}`, {
+    const { data } = await this.client.get(`${process.env.STRAPI_URL}/authors/${id}`, {
       params: { populate: '*' }
     })
     return data
   }
 
   async listArticles() {
-    const { data } = await this.client.get('/articles', {
+    const { data } = await this.client.get(`${process.env.STRAPI_URL}/articles`, {
       params: { populate: '*' }
     })
     this.posts = data
@@ -30,7 +30,7 @@ export default class strapiRepository {
         }
       }
     })
-    const { data: article } = await this.client.get(`/articles`, {
+    const { data: article } = await this.client.get(`${process.env.STRAPI_URL}/articles`, {
       params: {
         query,
         populate: '*'
