@@ -1,5 +1,4 @@
 import axios from "axios"
-import qs from "querystring"
 
 export default class strapiRepository {
   constructor(client = axios) {
@@ -23,16 +22,9 @@ export default class strapiRepository {
   }
 
   async getArticle(slug) {
-    const query = qs.stringify({
-      filters: {
-        slug: {
-          $eq: slug
-        }
-      }
-    })
     const { data: article } = await this.client.get(`${process.env.STRAPI_URL}/articles`, {
       params: {
-        query,
+        'filters[slug][$eq]': slug,
         populate: '*'
       }
     })

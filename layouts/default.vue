@@ -35,7 +35,6 @@ export default {
   }),
   async mounted() {
     this.hasConsentedCookies = localStorage.getItem('hasConsentedCookies')
-    console.log(this.hasConsentedCookies)
     if (this.hasConsentedCookies) {
       await bootstrap()
     }
