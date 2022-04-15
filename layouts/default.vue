@@ -21,12 +21,14 @@
   </div>
 </template>
 <script>
+import CookieConsent from "../components/CookieConsent"
+import MainHeader from "../components/MainHeader"
+import MainFooter from "../components/MainFooter"
 import SocialMediaButton from "../components/SocialMediaButton"
-import CookieConsent from "../components/CookieConsent";
-import {bootstrap} from "vue-gtag";
+import { bootstrap } from "vue-gtag"
 
 export default {
-  components: { CookieConsent, SocialMediaButton },
+  components: { CookieConsent, MainHeader, MainFooter, SocialMediaButton },
   head() {
     return { titleTemplate: '%s - Ruse'}
   },
@@ -144,6 +146,10 @@ export default {
 }
 .main-footer-content {
   grid-column: 1 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 
   @media (min-width: $medium-screen) {
     grid-column: 2 / 3;

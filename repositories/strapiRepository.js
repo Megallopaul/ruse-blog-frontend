@@ -7,14 +7,14 @@ export default class strapiRepository {
   }
 
   async getAuthor(id) {
-    const { data } = await this.client.get(`${process.env.STRAPI_URL}/authors/${id}`, {
+    const { data } = await this.client.get(`${process.env.STRAPI_URL}/api/authors/${id}`, {
       params: { populate: '*' }
     })
     return data
   }
 
   async listArticles() {
-    const { data } = await this.client.get(`${process.env.STRAPI_URL}/articles`, {
+    const { data } = await this.client.get(`${process.env.STRAPI_URL}/api/articles`, {
       params: { populate: '*' }
     })
     this.posts = data
@@ -22,19 +22,13 @@ export default class strapiRepository {
   }
 
   async getArticle(slug) {
-    const { data: article } = await this.client.get(`${process.env.STRAPI_URL}/articles`, {
+    console.log(slug)
+    const { data: article } = await this.client.get(`${process.env.STRAPI_URL}/api/articles`, {
       params: {
         'filters[slug][$eq]': slug,
         populate: '*'
       }
     })
     return article.data[0]
-  }
-
-  async getArticleFromSlug(slug) {
-    if (this.posts.length < 1) {
-      await this.listArticles()
-    }
-    return this.posts.data.find(post => post.attributes.slug === slug)
   }
 }
