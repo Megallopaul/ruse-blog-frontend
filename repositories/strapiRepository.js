@@ -22,7 +22,6 @@ export default class strapiRepository {
   }
 
   async getArticle(slug) {
-    console.log(slug)
     const { data: article } = await this.client.get(`${process.env.STRAPI_URL}/api/articles`, {
       params: {
         'filters[slug][$eq]': slug,

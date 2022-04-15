@@ -28,6 +28,28 @@ export default {
         lang: 'fr',
         amp: true
       },
+      meta: [
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          content: this.article.attributes.title
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          content: this.article.attributes.preview_image.data.attributes.url
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content: this.article.attributes.abstract
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          content: `${process.env.BASE_URL}${this.$route.path}`
+        },
+      ]
     }
   },
   async asyncData({ params }) {
