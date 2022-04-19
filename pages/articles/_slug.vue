@@ -30,6 +30,11 @@ export default {
       },
       meta: [
         {
+          hid: 'description',
+          name: 'description',
+          content: this.article.attributes.abstract
+        },
+        {
           hid: 'og:title',
           name: 'og:title',
           content: this.article.attributes.title
