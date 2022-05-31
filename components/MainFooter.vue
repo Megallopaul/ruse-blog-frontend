@@ -3,7 +3,7 @@
     <nuxt-link class="logo-wrapper" :to="{ path: '/' }">
       <img src="/logo-ruse-white.svg" alt="Logo Ruse" height="32px">
     </nuxt-link>
-    <nuxt-link class="footer-link" to="/">Me contacter</nuxt-link>
+    <a class="footer-link" href="mailto:mathilde@ruse-paris.fr?subject=Prise de contact" target="_blank">Me contacter</a>
   </div>
 </template>
 <style lang="scss" scoped>
