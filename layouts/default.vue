@@ -30,13 +30,13 @@ import { bootstrap } from "vue-gtag"
 export default {
   components: { CookieConsent, MainHeader, MainFooter, SocialMediaButton },
   head() {
-    return { titleTemplate: '%s - Ruse'}
+    return { titleTemplate: '%s - Ruse' }
   },
   data: () => ({
     hasConsentedCookies: false
   }),
   async mounted() {
-    this.hasConsentedCookies = localStorage.getItem('hasConsentedCookies')
+    this.hasConsentedCookies = localStorage.getItem('ruse:hasConsentedCookies')
     if (this.hasConsentedCookies) {
       await bootstrap()
     }
@@ -44,7 +44,7 @@ export default {
   methods: {
     async updateConsent(consent) {
       this.hasConsentedCookies = consent
-      localStorage.setItem('hasConsentedCookies', consent)
+      localStorage.setItem('ruse:hasConsentedCookies', consent)
       if (consent) {
         await bootstrap()
       }
