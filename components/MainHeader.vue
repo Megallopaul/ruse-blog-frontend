@@ -1,20 +1,12 @@
 <template>
   <nav class="main-header">
     <nuxt-link class="logo-wrapper" :to="{ path: '/' }">
-      <img src="/logo-ruse.svg" alt="Logo Ruse" height="65px">
+      <img src="/logo-ruse.svg" alt="">
     </nuxt-link>
     <ul class="main-navigation" role="navigation">
       <li>
         <nuxt-link class="nav-link" to="/">Blog</nuxt-link>
       </li>
-      <!--
-      <li>
-        <nuxt-link class="nav-link" to="/who-am-i">Qui suis-je ?</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link class="nav-link" to="contact">Me contacter</nuxt-link>
-      </li>
-      -->
     </ul>
   </nav>
 </template>
@@ -31,6 +23,10 @@
 }
 .logo-wrapper {
   margin-bottom: 1rem;
+
+  img {
+    height: 64px;
+  }
 
   @media (min-width: $medium-screen) {
     margin: 0;

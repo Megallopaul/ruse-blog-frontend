@@ -3,7 +3,9 @@
     <header class="main-header">
       <main-header class="main-header-content"/>
     </header>
-    <nuxt class="main-container" />
+    <div class="main-container">
+      <slot/>
+    </div>
     <div class="social-medias-container">
       <ul class="social-medias-list">
         <li>
@@ -25,7 +27,6 @@ import CookieConsent from "../components/CookieConsent"
 import MainHeader from "../components/MainHeader"
 import MainFooter from "../components/MainFooter"
 import SocialMediaButton from "../components/SocialMediaButton"
-import { bootstrap } from "vue-gtag"
 
 export default {
   components: { CookieConsent, MainHeader, MainFooter, SocialMediaButton },
@@ -38,7 +39,7 @@ export default {
   async mounted() {
     this.hasConsentedCookies = localStorage.getItem('ruse:hasConsentedCookies')
     if (this.hasConsentedCookies) {
-      await bootstrap()
+      // await bootstrap()
     }
   },
   methods: {
@@ -46,7 +47,7 @@ export default {
       this.hasConsentedCookies = consent
       localStorage.setItem('ruse:hasConsentedCookies', consent)
       if (consent) {
-        await bootstrap()
+        // await bootstrap()
       }
     },
   }
@@ -156,6 +157,7 @@ export default {
   }
 }
 .cookie-consent {
+  z-index: 5;
   position: fixed;
   bottom: 1rem;
   left: 1rem;

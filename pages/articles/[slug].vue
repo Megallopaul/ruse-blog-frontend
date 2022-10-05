@@ -2,7 +2,7 @@
   <div class="article-wrapper">
     <div class="article" itemscope itemtype="https://schema.org/Article">
       <h1 class="article-title" itemprop="name">{{ article.attributes.title }}</h1>
-      <time class="article-publication-date" :datetime="article.attributes.updatedAt" itemprop="datePublished">{{ publicationDate }}</time>
+      <time class="article-publication-date" :datetime="article.attributes.createdAt" itemprop="datePublished">{{ publicationDate }}</time>
       <img class="article-preview-image" :src="article.attributes.preview_image.data.attributes.url" alt="" />
       <div v-html="contentAsHtml" class="article-content" itemprop="articleBody"></div>
       <footer class="article-author">
@@ -21,55 +21,55 @@ import { blogRepository } from '@/repositories';
 
 export default {
   name: 'ArticlePage',
-  head() {
-    return {
-      title: this.article.attributes.title,
-      htmlAttrs: {
-        lang: 'fr',
-        amp: true
-      },
+  async setup() {
+    const route = useRoute()
+
+    const [{ data: article }, { data: author }] = await Promise.all([
+      useAsyncData(() => blogRepository.getArticle(route.params.slug), { initialCache: false }),
+      useAsyncData(() => blogRepository.getAuthor('1'))
+    ])
+
+    useHead({
+      title: article.value.attributes.title,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.article.attributes.abstract
+          content: article.value.attributes.abstract
         },
         {
           hid: 'og:title',
           name: 'og:title',
-          content: this.article.attributes.title
+          content: article.value.attributes.title
         },
         {
           hid: 'og:image',
           name: 'og:image',
-          content: this.article.attributes.preview_image.data.attributes.url
+          content: article.value.attributes.preview_image.data.attributes.url
         },
         {
           hid: 'og:description',
           name: 'og:description',
-          content: this.article.attributes.abstract
+          content: article.value.attributes.abstract
         },
         {
           hid: 'og:url',
           name: 'og:url',
-          content: `${process.env.BASE_URL}${this.$route.path}`
+          content: `${import.meta.env.VITE_STRAPI_URL}${route.fullPath}`
         },
       ]
-    }
-  },
-  async asyncData({ params }) {
+    })
+
+    const converter = new MarkdownIt({ html: true, linkify: true })
+
+    const contentAsHtml = computed(() => (converter.render(article.value.attributes.content)))
+    const publicationDate = computed(() => new Date(article.value.attributes.createdAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }))
+
     return {
-      article: await blogRepository.getArticle(params.slug),
-      author: await blogRepository.getAuthor('1')
-    }
-  },
-  computed: {
-    contentAsHtml() {
-      const converter = new MarkdownIt({ html: true, linkify: true })
-      return converter.render(this.article.attributes.content)
-    },
-    publicationDate() {
-      return new Date(this.article.attributes.updatedAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
+      article: article.value,
+      author: author.value,
+      contentAsHtml,
+      publicationDate
     }
   }
 }
@@ -85,7 +85,7 @@ export default {
   margin-bottom: 1.5rem;
 
   &:before, &:after {
-    content: url("static/4-branch-star.svg");
+    content: url("/4-branch-star.svg");
     height: 24px;
   }
 
@@ -115,7 +115,7 @@ export default {
 .article-content {
   margin-bottom: 2.5rem;
 
-  ::v-deep {
+  :deep {
     *::selection {
       background: lighten($pumpkin-orange,5%);
       color: white;
@@ -157,7 +157,7 @@ export default {
       }
     }
     ul {
-      list-style: url("static/dot.svg");
+      list-style: url("/dot.svg");
 
       li {
         padding-left: 0.2em;

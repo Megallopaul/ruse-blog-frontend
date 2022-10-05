@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 
 export default class strapiRepository {
   constructor(client = axios) {
@@ -7,14 +7,14 @@ export default class strapiRepository {
   }
 
   async getAuthor(id) {
-    const { data } = await this.client.get(`${process.env.STRAPI_URL}/api/authors/${id}`, {
+    const { data } = await this.client.get(`/api/authors/${id}`, {
       params: { populate: '*' }
     })
     return data
   }
 
   async listArticles() {
-    const { data } = await this.client.get(`${process.env.STRAPI_URL}/api/articles`, {
+    const { data } = await this.client.get(`/api/articles`, {
       params: { populate: '*' }
     })
     this.posts = data
@@ -22,7 +22,7 @@ export default class strapiRepository {
   }
 
   async getArticle(slug) {
-    const { data: article } = await this.client.get(`${process.env.STRAPI_URL}/api/articles`, {
+    const { data: article } = await this.client.get(`/api/articles`, {
       params: {
         'filters[slug][$eq]': slug,
         populate: '*'

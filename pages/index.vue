@@ -1,21 +1,21 @@
 <template>
   <div class="article-preview-list">
     <section class="main-article">
-      <nuxt-link :to="{ name: 'articles-slug', params: { slug: lastPublishedArticle.attributes.slug } }">
+      <nuxt-link :to="{ name: 'articles-slug', params: { slug: lastPublishedArticle.attributes.slug } }" no-prefetch>
         <article class="main article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${lastPublishedArticle.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ lastPublishedArticle.attributes.title }}</header>
-            <time class="publication-date" :datetime="lastPublishedArticle.attributes.updatedAt">{{ lastPublishedArticle.attributes.updatedAt | publicationDate }}</time>
+            <time class="publication-date" :datetime="lastPublishedArticle.attributes.createdAt">{{ publicationDate(lastPublishedArticle.attributes.updatedAt) }}</time>
           </div>
         </article>
       </nuxt-link>
     </section>
     <section class="remaining-articles">
-      <nuxt-link v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug } }">
+      <nuxt-link v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug } }" no-prefetch>
         <article class="article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${article.attributes.preview_image.data.attributes.formats.small.url})` }">
           <div class="article-informations">
             <header class="title">{{ article.attributes.title }}</header>
-            <time class="publication-date" :datetime="article.attributes.updatedAt">{{ article.attributes.updatedAt | publicationDate }}</time>
+            <time class="publication-date" :datetime="article.attributes.createdAt">{{ publicationDate(article.attributes.updatedAt) }}</time>
           </div>
         </article>
       </nuxt-link>
@@ -27,29 +27,26 @@ import { blogRepository } from "@/repositories"
 
 export default {
   name: 'IndexPage',
-  head() {
-    return { titleTemplate: null }
-  },
-  async asyncData() {
-    const { data, meta } = await blogRepository.listArticles()
-    return { articles: data, metadata: meta }
-  },
-  computed: {
-    articlesSortedByPublicationDate() {
-      return this.articles
+  async setup() {
+    useHead({
+      titleTemplate: 'Ruse'
+    })
+    const { data } = await useAsyncData(() => blogRepository.listArticles())
+    const articles = data.value.data
+
+    const articlesSortedByPublicationDate = computed(() => (articles
         .sort((article1, article2) => new Date(article1.attributes.publishedAt) - new Date(article2.attributes.publishedAt))
-        .reverse()
-    },
-    lastPublishedArticle() {
-      return this.articlesSortedByPublicationDate[0]
-    },
-    remainingArticles() {
-      return this.articlesSortedByPublicationDate.slice(1)
-    }
-  },
-  filters: {
-    publicationDate(date) {
-      return new Date(date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
+        .reverse()))
+    const lastPublishedArticle = computed(() => (articlesSortedByPublicationDate.value[0]))
+    const remainingArticles = computed(() => (articlesSortedByPublicationDate.value.slice(1)))
+
+    const publicationDate = (date) => new Date(date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
+
+    return {
+      articlesSortedByPublicationDate,
+      lastPublishedArticle,
+      publicationDate,
+      remainingArticles,
     }
   }
 }
