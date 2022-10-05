@@ -27,15 +27,31 @@ import CookieConsent from "../components/CookieConsent"
 import MainHeader from "../components/MainHeader"
 import MainFooter from "../components/MainFooter"
 import SocialMediaButton from "../components/SocialMediaButton"
+import { useState } from "vue-gtag-next"
 
 export default {
   components: { CookieConsent, MainHeader, MainFooter, SocialMediaButton },
-  head() {
-    return { titleTemplate: '%s - Ruse' }
+  setup() {
+    useHead({
+      titleTemplate: '%s - Ruse'
+    })
+    const { property } = useState()
+    const hasConsentedCookies = ref(localStorage.getItem('ruse:hasConsentedCookies'))
+    const updateConsent = (consent) => hasConsentedCookies.value = consent
+
+    watch(hasConsentedCookies, (consent) => {
+      localStorage.setItem('ruse:hasConsentedCookies', consent)
+      if (consent) {
+        property.value.anonymize_ip = false
+      }
+    })
+
+    return {
+      hasConsentedCookies,
+      updateConsent
+    }
   },
-  data: () => ({
-    hasConsentedCookies: false
-  }),
+  /*
   async mounted() {
     this.hasConsentedCookies = localStorage.getItem('ruse:hasConsentedCookies')
     if (this.hasConsentedCookies) {
@@ -51,6 +67,7 @@ export default {
       }
     },
   }
+ */
 }
 </script>
 <style lang="scss" scoped>

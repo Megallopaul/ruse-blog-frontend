@@ -8,7 +8,7 @@ const getRoutes = async () => {
 	})
 	const blogRepository = new strapiRepository(strapiClient)
 	const { data } = await blogRepository.listArticles()
-	return data.map(article => '/articles/' + article.attributes.slug)
+	return data.map(article => `/articles/${article.attributes.slug}`)
 }
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
