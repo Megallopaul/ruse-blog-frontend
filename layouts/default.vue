@@ -19,7 +19,6 @@
     <footer class="main-footer">
       <main-footer class="main-footer-content" />
     </footer>
-    <cookie-consent v-show="hasConsentedCookies === null" class="cookie-consent" @consent="updateConsent"/>
   </div>
 </template>
 <script>
@@ -171,18 +170,6 @@ export default {
 
   @media (min-width: $medium-screen) {
     grid-column: 2 / 3;
-  }
-}
-.cookie-consent {
-  z-index: 5;
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  box-shadow: 5px 5px 15px 0 transparentize(black, 0.75);
-
-  @media (min-width: $medium-screen) {
-    left: unset;
   }
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="read-policy-wrapper">
       <div class="question">Pouvons-nous utiliser des cookies ?</div>
       <div class="read-policy">Lisez notre
-        <a class="policy-link" href="https://www.cookiepolicygenerator.com/live.php?token=3JQtiwijXnTMA4cocggmnrzrcoUIbJGG" target="_blank">politique de cookies</a>
+        <nuxt-link class="policy-link" to="/cookie-policy">politique de cookies</nuxt-link>
       </div>
     </div>
     <div>
