@@ -1,5 +1,5 @@
 <template>
-  <div class="cookies-consent">
+  <div class="cookies-consent" v-show="hasConsented === null">
     <div class="read-policy-wrapper">
       <div class="question">Pouvons-nous utiliser des cookies ?</div>
       <div class="read-policy">Lisez notre
@@ -7,20 +7,25 @@
       </div>
     </div>
     <div>
-      <button class="accept button" @click="emitConsent(true)">Oui</button>
-      <button class="decline button" @click="emitConsent(false)">Non</button>
+      <button class="accept button" @click="updateConsent(true)">Oui</button>
+      <button class="decline button" @click="updateConsent(false)">Non</button>
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'CookieConsent',
-  methods: {
-    emitConsent(consent) {
-      this.$emit('consent', consent)
-    }
+<script setup>
+import { useState } from "vue-gtag-next";
+
+const { property } = useState()
+const hasConsented = ref(localStorage.getItem('ruse:hasConsentedCookies'))
+
+const updateConsent = (consent) => hasConsented.value = consent
+
+watch(hasConsented, (consent) => {
+  localStorage.setItem('ruse:hasConsentedCookies', consent)
+  if (consent) {
+    property.value.anonymize_ip = false
   }
-}
+})
 </script>
 <style lang="scss" scoped>
 .cookie-consent {

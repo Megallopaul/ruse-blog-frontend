@@ -21,53 +21,14 @@
     </footer>
   </div>
 </template>
-<script>
-import CookieConsent from "../components/CookieConsent"
+<script setup>
 import MainHeader from "../components/MainHeader"
 import MainFooter from "../components/MainFooter"
 import SocialMediaButton from "../components/SocialMediaButton"
-import { useState } from "vue-gtag-next"
 
-export default {
-  components: { CookieConsent, MainHeader, MainFooter, SocialMediaButton },
-  setup() {
-    useHead({
-      titleTemplate: '%s - Ruse'
-    })
-    const { property } = useState()
-    const hasConsentedCookies = ref(localStorage.getItem('ruse:hasConsentedCookies'))
-    const updateConsent = (consent) => hasConsentedCookies.value = consent
-
-    watch(hasConsentedCookies, (consent) => {
-      localStorage.setItem('ruse:hasConsentedCookies', consent)
-      if (consent) {
-        property.value.anonymize_ip = false
-      }
-    })
-
-    return {
-      hasConsentedCookies,
-      updateConsent
-    }
-  },
-  /*
-  async mounted() {
-    this.hasConsentedCookies = localStorage.getItem('ruse:hasConsentedCookies')
-    if (this.hasConsentedCookies) {
-      // await bootstrap()
-    }
-  },
-  methods: {
-    async updateConsent(consent) {
-      this.hasConsentedCookies = consent
-      localStorage.setItem('ruse:hasConsentedCookies', consent)
-      if (consent) {
-        // await bootstrap()
-      }
-    },
-  }
- */
-}
+useHead({
+  titleTemplate: '%s - Ruse'
+})
 </script>
 <style lang="scss" scoped>
 .default-layout {

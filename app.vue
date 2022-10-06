@@ -3,23 +3,13 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <cookie-consent v-show="hasConsentedCookies === null" class="cookie-consent" @consent="updateConsent"/>
+    <client-only>
+      <cookie-consent class="cookie-consent" />
+    </client-only>
   </div>
 </template>
 <script setup>
-import { useState } from "vue-gtag-next";
 import CookieConsent from "./components/CookieConsent";
-
-const { property } = useState()
-const hasConsentedCookies = ref(localStorage.getItem('ruse:hasConsentedCookies'))
-const updateConsent = (consent) => hasConsentedCookies.value = consent
-
-watch(hasConsentedCookies, (consent) => {
-  localStorage.setItem('ruse:hasConsentedCookies', consent)
-  if (consent) {
-    property.value.anonymize_ip = false
-  }
-})
 </script>
 <style lang="scss" scoped>
 .cookie-consent {

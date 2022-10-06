@@ -20,5 +20,10 @@
   color: white;
   text-decoration: none;
   font-size: 0.9em;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
 }
 </style>
