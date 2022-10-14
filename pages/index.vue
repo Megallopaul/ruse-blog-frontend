@@ -5,7 +5,7 @@
         <article class="main article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${lastPublishedArticle.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ lastPublishedArticle.attributes.title }}</header>
-            <time class="publication-date" :datetime="lastPublishedArticle.attributes.updatedAt">{{ lastPublishedArticle.attributes.updatedAt | publicationDate }}</time>
+            <time class="publication-date" :datetime="lastPublishedArticle.attributes.createdAt">{{ lastPublishedArticle.attributes.createdAt | publicationDate }}</time>
           </div>
         </article>
       </nuxt-link>
@@ -15,7 +15,7 @@
         <article class="article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${article.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ article.attributes.title }}</header>
-            <time class="publication-date" :datetime="article.attributes.updatedAt">{{ article.attributes.updatedAt | publicationDate }}</time>
+            <time class="publication-date" :datetime="article.attributes.createdAt">{{ article.attributes.createdAt | publicationDate }}</time>
           </div>
         </article>
       </nuxt-link>
