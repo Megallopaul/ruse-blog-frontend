@@ -15,64 +15,52 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import MarkdownIt from 'markdown-it'
 import { blogRepository } from '@/repositories';
 
-export default {
-  name: 'ArticlePage',
-  async setup() {
-    const route = useRoute()
+const route = useRoute()
 
-    const [{ data: article }, { data: author }] = await Promise.all([
-      useAsyncData(() => blogRepository.getArticle(route.params.slug), { initialCache: false }),
-      useAsyncData(() => blogRepository.getAuthor('1'))
-    ])
+const [{ data: article }, { data: author }] = await Promise.all([
+  useAsyncData(() => blogRepository.getArticle(route.params.slug), { initialCache: false }),
+  useAsyncData(() => blogRepository.getAuthor('1'))
+])
 
-    useHead({
-      title: article.value.attributes.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: article.value.attributes.abstract
-        },
-        {
-          hid: 'og:title',
-          name: 'og:title',
-          content: article.value.attributes.title
-        },
-        {
-          hid: 'og:image',
-          name: 'og:image',
-          content: article.value.attributes.preview_image.data.attributes.url
-        },
-        {
-          hid: 'og:description',
-          name: 'og:description',
-          content: article.value.attributes.abstract
-        },
-        {
-          hid: 'og:url',
-          name: 'og:url',
-          content: `${import.meta.env.VITE_STRAPI_URL}${route.fullPath}`
-        },
-      ]
-    })
+useHead({
+  title: article.value.attributes.title,
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: article.value.attributes.abstract
+    },
+    {
+      hid: 'og:title',
+      name: 'og:title',
+      content: article.value.attributes.title
+    },
+    {
+      hid: 'og:image',
+      name: 'og:image',
+      content: article.value.attributes.preview_image.data.attributes.url
+    },
+    {
+      hid: 'og:description',
+      name: 'og:description',
+      content: article.value.attributes.abstract
+    },
+    {
+      hid: 'og:url',
+      name: 'og:url',
+      content: `${import.meta.env.VITE_STRAPI_URL}${route.fullPath}`
+    },
+  ]
+})
 
-    const converter = new MarkdownIt({ html: true, linkify: true })
+const converter = new MarkdownIt({ html: true, linkify: true })
 
-    const contentAsHtml = computed(() => (converter.render(article.value.attributes.content)))
-    const publicationDate = computed(() => new Date(article.value.attributes.createdAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }))
-
-    return {
-      article: article.value,
-      author: author.value,
-      contentAsHtml,
-      publicationDate
-    }
-  }
-}
+const contentAsHtml = computed(() => (converter.render(article.value.attributes.content)))
+const publicationDate = computed(() => new Date(article.value.attributes.createdAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }))
 </script>
 <style lang="scss" scoped>
 .article {

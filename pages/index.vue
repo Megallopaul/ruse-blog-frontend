@@ -22,34 +22,22 @@
     </section>
   </div>
 </template>
-<script>
+<script setup>
 import { blogRepository } from "@/repositories"
 
-export default {
-  name: 'IndexPage',
-  async setup() {
-    useHead({
-      titleTemplate: 'Ruse'
-    })
-    const { data } = await useAsyncData(() => blogRepository.listArticles())
-    const articles = data.value.data
+useHead({
+  titleTemplate: 'Ruse'
+})
+const { data } = await useAsyncData((nuxtApp) => blogRepository.listArticles())
+const articles = data.value.data
 
-    const articlesSortedByPublicationDate = computed(() => (articles
-        .sort((article1, article2) => new Date(article1.attributes.publishedAt) - new Date(article2.attributes.publishedAt))
-        .reverse()))
-    const lastPublishedArticle = computed(() => (articlesSortedByPublicationDate.value[0]))
-    const remainingArticles = computed(() => (articlesSortedByPublicationDate.value.slice(1)))
+const articlesSortedByPublicationDate = computed(() => (articles
+  .sort((article1, article2) => new Date(article1.attributes.publishedAt) - new Date(article2.attributes.publishedAt))
+  .reverse()))
+const lastPublishedArticle = computed(() => (articlesSortedByPublicationDate.value[0]))
+const remainingArticles = computed(() => (articlesSortedByPublicationDate.value.slice(1)))
 
-    const publicationDate = (date) => new Date(date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
-
-    return {
-      articlesSortedByPublicationDate,
-      lastPublishedArticle,
-      publicationDate,
-      remainingArticles,
-    }
-  }
-}
+const publicationDate = (date) => new Date(date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
 </script>
 <style lang="scss" scoped>
 h1 {
