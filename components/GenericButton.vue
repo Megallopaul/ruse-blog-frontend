@@ -17,8 +17,13 @@ export default {
   color: $pumpkin-orange;
   font-family: inherit;
   font-weight: 500;
+  font-size: 1rem;
   padding: 0.75rem 1.5rem;
   transition: background-color 0.2s;
+
+  @media (min-width: $medium-screen) {
+    font-size: 0.75rem;
+  }
 
   &:hover {
     background-color: lighten($pumpkin-orange, 34%);
