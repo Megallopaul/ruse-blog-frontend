@@ -1,5 +1,5 @@
 <template>
-  <div class="article-wrapper">
+  <main class="article-wrapper">
     <div class="article" itemscope itemtype="https://schema.org/Article">
       <h1 class="article-title" itemprop="name">{{ article.attributes.title }}</h1>
       <time class="article-publication-date" :datetime="article.attributes.createdAt" itemprop="datePublished">{{ publicationDate }}</time>
@@ -13,7 +13,7 @@
         </div>
       </footer>
     </div>
-  </div>
+  </main>
 </template>
 <script>
 import MarkdownIt from 'markdown-it'
@@ -30,9 +30,24 @@ export default {
       },
       meta: [
         {
+          hid: 'author',
+          name: 'author',
+          content: this.author.data.attributes.name,
+        },
+        {
           hid: 'description',
           name: 'description',
           content: this.article.attributes.abstract
+        },
+        {
+          hid: 'article:published_time',
+          name: 'article:published_time',
+          content: this.publicationDate,
+        },
+        {
+          hid: 'og:type',
+          name: 'og:type',
+          content: 'article'
         },
         {
           hid: 'og:title',

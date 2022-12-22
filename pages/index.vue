@@ -1,5 +1,5 @@
 <template>
-  <div class="article-preview-list">
+  <main class="article-preview-list">
     <section class="main-article">
       <nuxt-link :to="{ name: 'articles-slug', params: { slug: lastPublishedArticle.attributes.slug } }">
         <article class="main article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${lastPublishedArticle.attributes.preview_image.data.attributes.url})` }">
@@ -29,7 +29,7 @@
       </nuxt-link>
     </section>
     <generic-button class="see-more-button" @click.native="toggleSeeMore">{{ seeMoreLabel }}</generic-button>
-  </div>
+  </main>
 </template>
 <script>
 import { blogRepository } from "@/repositories"

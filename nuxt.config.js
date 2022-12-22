@@ -2,7 +2,17 @@ import { blogRepository } from './repositories/index'
 
 const getRoutes = async () => {
   const { data: articles } = await blogRepository.listArticles()
-  return articles.map(async article => `/articles/${article.attributes.slug}`)
+  articles.map(async article => console.log(`/articles/${article.attributes.slug}`))
+  // return articles.map(async article => `/articles/${article.attributes.slug}`)
+  return [
+    '/articles/les-youtubeurs-slowfashion',
+    '/articles/les-fripes-a-marseille',
+    '/articles/top-10-des-shops-vintage-en-ligne',
+    '/articles/ou-faire-les-fripes-a-Amsterdam',
+    '/articles/cinq-etapes-pour-trouver-sa-piece-de-seconde-main',
+    '/articles/ou-trouver-de-la-seconde-main',
+    '/articles/top-dix-pieces-faciles-a-trouver-de-seconde-main'
+  ]
 }
 
 export default {
