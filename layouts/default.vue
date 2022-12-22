@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import CookieConsent from "../components/CookieConsent"
+import CookieConsent from "../components/CookieConsentBanner"
 import MainHeader from "../components/MainHeader"
 import MainFooter from "../components/MainFooter"
 import SocialMediaButton from "../components/SocialMediaButton"

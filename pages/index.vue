@@ -11,7 +11,15 @@
       </nuxt-link>
     </section>
     <section class="remaining-articles">
-      <nuxt-link v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug } }">
+      <nuxt-link v-for="article in headlineArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug } }">
+        <article class="article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${article.attributes.preview_image.data.attributes.url})` }">
+          <div class="article-informations">
+            <header class="title">{{ article.attributes.title }}</header>
+            <time class="publication-date" :datetime="article.attributes.createdAt">{{ article.attributes.createdAt | publicationDate }}</time>
+          </div>
+        </article>
+      </nuxt-link>
+      <nuxt-link v-if="remainingArticles && isSeeMoreClicked" v-for="article in remainingArticles" :key="article.id" :to="{ name: 'articles-slug', params: { slug: article.attributes.slug } }">
         <article class="article-preview" :style="{ backgroundImage: `linear-gradient(transparent 0%, rgb(0, 0, 0, 0.7) 100%), url(${article.attributes.preview_image.data.attributes.url})` }">
           <div class="article-informations">
             <header class="title">{{ article.attributes.title }}</header>
@@ -20,10 +28,13 @@
         </article>
       </nuxt-link>
     </section>
+    <generic-button class="see-more-button" @click.native="toggleSeeMore">{{ seeMoreLabel }}</generic-button>
   </div>
 </template>
 <script>
 import { blogRepository } from "@/repositories"
+
+const HEADLINE_ARTICLES_LENGTH = 4
 
 export default {
   name: 'IndexPage',
@@ -34,6 +45,9 @@ export default {
     const { data, meta } = await blogRepository.listArticles()
     return { articles: data, metadata: meta }
   },
+  data: () => ({
+    isSeeMoreClicked: false
+  }),
   computed: {
     articlesSortedByPublicationDate() {
       return this.articles
@@ -43,9 +57,20 @@ export default {
     lastPublishedArticle() {
       return this.articlesSortedByPublicationDate[0]
     },
+    headlineArticles() {
+      return this.articlesSortedByPublicationDate.slice(1, HEADLINE_ARTICLES_LENGTH + 1)
+    },
     remainingArticles() {
-      return this.articlesSortedByPublicationDate.slice(1)
+      return this.articlesSortedByPublicationDate.slice(HEADLINE_ARTICLES_LENGTH + 1)
+    },
+    seeMoreLabel() {
+      return this.isSeeMoreClicked ? 'Voir moins' : 'Voir plus'
     }
+  },
+  methods: {
+    toggleSeeMore() {
+      this.isSeeMoreClicked = !this.isSeeMoreClicked
+    },
   },
   filters: {
     publicationDate(date) {
@@ -133,5 +158,10 @@ h1 {
   left: 2rem;
   right: 2rem;
   z-index: 2;
+}
+
+.see-more-button {
+  display: block;
+  margin: auto;
 }
 </style>

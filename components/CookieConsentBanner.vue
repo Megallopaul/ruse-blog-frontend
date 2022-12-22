@@ -30,6 +30,7 @@ export default {
   align-items: center;
   padding: 0.8rem;
   justify-content: space-between;
+  z-index: 100;
 }
 .read-policy-wrapper {
   margin-right: 1rem;
@@ -64,10 +65,14 @@ export default {
     background-color: $pumpkin-orange;
     color: white;
     margin-right: 0.5rem;
+
+    &:hover {
+      background-color: lighten($pumpkin-orange, 5%);
+    }
   }
 
-  &:hover {
-    background-color: in;
+  &.decline:hover {
+    background-color: lighten($pumpkin-orange, 34%);
   }
 }
 </style>

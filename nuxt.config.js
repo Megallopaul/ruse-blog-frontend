@@ -1,8 +1,8 @@
 import { blogRepository } from './repositories/index'
 
 const getRoutes = async () => {
-  const { data } = await blogRepository.listArticles()
-  return data.map(async article => '/articles/' + article.attributes.slug)
+  const { data: articles } = await blogRepository.listArticles()
+  return articles.map(async article => `/articles/${article.attributes.slug}`)
 }
 
 export default {
@@ -30,13 +30,11 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/fonts.scss',
-    '~/assets/global.scss',
+    '~/assets/global.scss'
   ],
 
   styleResources: {
-    scss: [
-      '~/assets/main.scss',
-    ]
+    scss: ['~/assets/main.scss']
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -72,7 +70,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     minifyCSS: true,
-    minifyJS: true,
+    minifyJS: true
   },
 
   generate: {

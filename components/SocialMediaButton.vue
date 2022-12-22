@@ -29,7 +29,7 @@ export default {
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: lighten($pumpkin-orange, 32%);
+    background-color: lighten($pumpkin-orange, 34%);
     transition: background-color 0.2s;
   }
 }
